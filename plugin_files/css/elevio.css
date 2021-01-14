@@ -1,0 +1,17 @@
+@import url(//fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic);
+
+#elevio {
+    font-family: "Source Sans Pro", "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+}
+
+#elevio #logo span {
+    font-size: 20px;
+    font-weight: bold;
+    position: relative;
+    top: -5px;
+    left: 20px;
+}
+
+#elevio .postbox {
+    padding-left: 20px;
+}
