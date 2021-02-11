@@ -64,7 +64,7 @@ class Elevio_Sync_Post
     // String
   public $custom_fields;   // Object (included by using custom_fields query var)
 
-  public function Elevio_Sync_Post($wp_post = null)
+  public function __construct($wp_post = null)
   {
       if (! empty($wp_post)) {
           $this->import_wp_object($wp_post);
@@ -104,7 +104,14 @@ class Elevio_Sync_Post
         $args['taxonomy'] = Elevio::get_instance()->get_category_taxonomy();
         global $json_api;
         $this->categories = [];
-        if ($wp_categories = get_the_terms($this->id, $args['taxonomy'])) {
+
+	    if ( has_filter( 'wpml_object_id' ) ) {
+		    global $sitepress;
+		    $language = elevio_get_language_code( $this->id );
+		    $sitepress->switch_lang( $language );
+	    }
+
+        if ($wp_categories = wp_get_object_terms( $this->id, $args['taxonomy'] )) {
             foreach ($wp_categories as $wp_category) {
                 $category = new Elevio_Sync_Category($wp_category);
                 if ($category->id == 1 && $category->slug == 'uncategorized' && $args['taxonomy'] == 'category') {

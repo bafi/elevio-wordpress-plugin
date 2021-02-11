@@ -140,6 +140,8 @@ final class ElevioAdmin extends Elevio
         delete_option('elevio_account_id');
         delete_option('elevio_secret_id');
         delete_option('elevio_is_enabled');
+        delete_option('elevio_multi_language_is_enabled');
+        delete_option('elevio_aggregated_translated_articles');
         delete_option('elevio_category_taxonomy');
         delete_option('elevio_post_taxonomy');
         delete_option('elevio_tag_taxonomy');
@@ -164,6 +166,14 @@ final class ElevioAdmin extends Elevio
 
         if (isset($data['elevio_enable_form'])) {
             update_option('elevio_is_enabled', (bool) $data['elevio_is_enabled']);
+        }
+
+        if (isset($data['elevio_multi_language_is_enabled'])) {
+            update_option('elevio_multi_language_is_enabled', (bool) $data['elevio_multi_language_is_enabled']);
+        }
+
+        if (isset($data['elevio_aggregated_translated_articles'])) {
+            update_option('elevio_aggregated_translated_articles', (bool) $data['elevio_aggregated_translated_articles']);
         }
 
         if (isset($data['elevio_category_taxonomy'])) {
