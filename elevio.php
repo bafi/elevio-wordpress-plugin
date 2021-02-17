@@ -5,7 +5,7 @@ Plugin URI: https://elev.io/
 Description: A better way for your users to access the help they need.
 Author: Elevio
 Author URI: https://elev.io
-Version: 4.2.0
+Version: 4.1.0
 */
 
 function elevio_posts_tax_query($tax_query)
@@ -41,10 +41,28 @@ add_filter( 'elevio_retrieve_categories_in_all_languages', 'elevio_retrieve_cate
 add_filter( 'elevio_append_language_id_to_article', 'elevio_append_language_id_to_article', 10, 2 );
 add_filter( 'elevio_add_article_filters', 'elevio_add_article_filters', 10, 2 );
 add_filter( 'elevio_aggregate_translated_articles', 'elevio_aggregate_translated_articles' );
-
+add_filter( 'elevio_aggregate_translated_categories', 'elevio_aggregate_translated_categories', 10, 2 );
 
 /**
- * Aggregate the translated article and make all tied to the same article
+ * Aggregate the translated categories
+ * @param $categories
+ * @param $cat_type
+ *
+ * @return mixed
+ */
+function elevio_aggregate_translated_categories( $categories, $cat_type ) {
+	global $sitepress;
+	$default_language = $sitepress->get_default_language();
+	foreach ( $categories as $key => $category ) {
+		$category_id            = wpml_object_id_filter( $category->id, $cat_type, true, $default_language );
+		$categories[ $key ]->id = $category_id;
+	}
+
+	return $categories;
+}
+
+/**
+ * Aggregate the translated articles
  * @param $posts
  *
  * @return mixed

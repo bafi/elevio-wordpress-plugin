@@ -34,7 +34,11 @@ class ElevioSync
 
 	    if ( $this->is_multilanguage_allowed() ) {
 	        // Integrate with WPML
-            $categories = apply_filters( 'elevio_retrieve_categories_in_all_languages', $categories, $args );
+		    $categories = apply_filters( 'elevio_retrieve_categories_in_all_languages', $categories, $args );
+	    }
+
+	    if ( $this->is_aggregate_translated_articles_enabled() ) {
+		    $categories = apply_filters( 'elevio_aggregate_translated_categories', $categories, $args['taxonomy'] );
 	    }
 
         return $categories;
