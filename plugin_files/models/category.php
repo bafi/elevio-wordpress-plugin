@@ -19,7 +19,7 @@ class Elevio_Sync_Category
     // Integer
   public $post_count;  // Integer
 
-  public function Elevio_Sync_Category($wp_category = null)
+  public function __construct($wp_category = null)
   {
       if ($wp_category) {
           $this->import_wp_object($wp_category);

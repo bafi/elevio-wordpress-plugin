@@ -32,6 +32,15 @@ class ElevioSync
             $categories[] = $category;
         }
 
+	    if ( $this->is_multilanguage_allowed() ) {
+	        // Integrate with WPML
+		    $categories = apply_filters( 'elevio_retrieve_categories_in_all_languages', $categories, $args );
+	    }
+
+	    if ( $this->is_aggregate_translated_articles_enabled() ) {
+		    $categories = apply_filters( 'elevio_aggregate_translated_categories', $categories, $args['taxonomy'] );
+	    }
+
         return $categories;
     }
 
@@ -62,8 +71,13 @@ class ElevioSync
         // Allow the running of some extra filters on the retrieved topics
         $tax_query = apply_filters('elevio_posts_tax_query', $tax_query);
         $_GET['tax_query'] = $tax_query;
+	    $filters = $_GET;
 
-        query_posts(http_build_query($_GET));
+	    if ( $this->is_multilanguage_allowed() ) {
+	        $filters = apply_filters( 'elevio_add_article_filters', $filters);
+	    }
+
+        query_posts(http_build_query($filters));
 
         $output = [];
         while (have_posts()) {
@@ -73,10 +87,19 @@ class ElevioSync
             } else {
                 $new_post = new Elevio_Sync_Post($post);
             }
-            $output[] = $new_post;
+
+	        if ( $this->is_multilanguage_allowed() ) {
+		        $new_post = apply_filters( 'elevio_append_language_id_to_article', $new_post, $post->ID );
+	        }
+
+	        $output[] = $new_post;
         }
 
-        return $output;
+	    if ( $this->is_aggregate_translated_articles_enabled() ) {
+		    $output = apply_filters( 'elevio_aggregate_translated_articles', $output );
+	    }
+
+        return array_values($output);
     }
 
     protected function set_posts_query($query = false)
@@ -107,4 +130,13 @@ class ElevioSync
             do_action('json_api_query', $wp_query);
         }
     }
+
+	private function is_multilanguage_allowed() {
+		return Elevio::get_instance()->multi_language_is_enabled();
+	}
+
+
+	private function is_aggregate_translated_articles_enabled() {
+		return boolval($this->is_multilanguage_allowed() && Elevio::get_instance()->aggregate_translated_articles());
+	}
 }

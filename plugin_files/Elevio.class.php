@@ -76,6 +76,27 @@ class Elevio
     }
 
     /**
+     * Returns true if Elevio support multilanguage,
+     * false otherwise.
+     *
+     * @return bool
+     */
+    public function multi_language_is_enabled()
+    {
+        return get_option('elevio_multi_language_is_enabled', false);
+    }
+
+    /**
+     * Aggregate WP posts with translation all tied to that same article
+     *
+     * @return bool
+     */
+    public function aggregate_translated_articles()
+    {
+        return get_option('elevio_aggregated_translated_articles', false);
+    }
+
+    /**
      * Returns true if Elevio account id set properly,
      * false otherwise.
      *

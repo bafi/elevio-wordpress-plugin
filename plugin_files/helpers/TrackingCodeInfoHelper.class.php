@@ -78,6 +78,26 @@ class TrackingCodeInfoHelper extends ElevioHelper
                                     </select>
                                 </td>
                             </tr>
+                            <tr>
+                                <th scope="row">
+                                    <label for="elevio_multi_language_is_enabled">Support multilanguage:</label>
+                                </th>
+                                <td>
+                                    <input type="hidden" name="elevio_multi_language_is_enabled" value="0">
+                                    <input type="checkbox" name="elevio_multi_language_is_enabled" id="elevio_multi_language_is_enabled" value="1" <?php echo Elevio::get_instance()->multi_language_is_enabled() ? 'checked="checked"' : ''; ?> />
+                                    (Integrated with WPML only - you should have WPML to support multilanguage)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    <label for="elevio_aggregated_translated_articles">Aggregate translated articles:</label>
+                                </th>
+                                <td>
+                                    <input type="hidden" name="elevio_aggregated_translated_articles" value="0">
+                                    <input type="checkbox" name="elevio_aggregated_translated_articles" id="elevio_aggregated_translated_articles" value="1" <?php echo Elevio::get_instance()->aggregate_translated_articles() ? 'checked="checked"' : ''; ?> />
+                                    (Make one Elevio article for each post with translation all tied to that same article - Integrated with WPML only)
+                                </td>
+                            </tr>
 
                         </table>
 
