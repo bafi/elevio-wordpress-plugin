@@ -30,20 +30,6 @@ class TrackingCodeInfoHelper extends ElevioHelper
 
                             <tr>
                                 <th scope="row">
-                                    <label for="elevio_version">I would like to load version: </label>
-                                </th>
-                                <td>
-                                    <select name="elevio_version" id="elevio_version" >
-                                        <?php foreach ([3, 4] as $version) { ?>
-                                            <option <?php echo Elevio::get_instance()->get_version() === $version ? 'selected="selected"' : ''?>><?php echo $version; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                    (Version 4 is recommended)
-                                </td>
-                            </tr>
-
-                            <tr>
-                                <th scope="row">
                                     <label for="elevio_category_taxonomy">Category taxonomy:</label>
                                 </th>
                                 <td>

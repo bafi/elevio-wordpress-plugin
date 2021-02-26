@@ -7,7 +7,6 @@ class TrackingCodeHelper extends ElevioHelper
     public function render()
     {
         if (Elevio::get_instance()->is_installed()) {
-            $version = Elevio::get_instance()->get_version();
             $account_id = Elevio::get_instance()->get_account_id();
             $secret_id = Elevio::get_instance()->get_secret_id();
 
@@ -27,8 +26,7 @@ _elev.user = {
 ";
             }
 
-            if ($version == 4) {
-                return <<<HTML
+            return <<<HTML
 <script type="text/javascript">
 var _elev = window._elev || {};
 _elev.account_id = '{$account_id}';
@@ -36,15 +34,6 @@ _elev.account_id = '{$account_id}';
 {$user}
 </script>
 HTML;
-            } else {
-                return <<<HTML
-<script type="text/javascript">
-var _elev = window._elev || {};(function() {var i,e;i=document.createElement("script"),i.type='text/javascript';i.async=1,i.src="https://static.elev.io/js/v3.js",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(i,e);})();
-_elev.account_id = '{$account_id}';
-{$user}
-</script>
-HTML;
-            }
         }
 
         return '';

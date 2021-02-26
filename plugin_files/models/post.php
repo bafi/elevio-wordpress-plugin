@@ -105,13 +105,13 @@ class Elevio_Sync_Post
         global $json_api;
         $this->categories = [];
 
-	    if ( has_filter( 'wpml_object_id' ) ) {
-		    global $sitepress;
-		    $language = elevio_get_language_code( $this->id );
-		    $sitepress->switch_lang( $language );
-	    }
+        if (has_filter('wpml_object_id')) {
+            global $sitepress;
+            $language = elevio_get_language_code($this->id);
+            $sitepress->switch_lang($language);
+        }
 
-        if ($wp_categories = wp_get_object_terms( $this->id, $args['taxonomy'] )) {
+        if ($wp_categories = wp_get_object_terms($this->id, $args['taxonomy'])) {
             foreach ($wp_categories as $wp_category) {
                 $category = new Elevio_Sync_Category($wp_category);
                 if ($category->id == 1 && $category->slug == 'uncategorized' && $args['taxonomy'] == 'category') {
