@@ -2,6 +2,8 @@
 
 class ElevioSync
 {
+    private $languages = [];
+
     public function __construct()
     {
         require_once dirname(__FILE__).'/models/category.php';
@@ -79,6 +81,7 @@ class ElevioSync
 
         query_posts(http_build_query($filters));
 
+        $langs = $this->getAvailableLanguages();
         $output = [];
         while (have_posts()) {
             the_post();
@@ -90,6 +93,16 @@ class ElevioSync
 
 	        if ( $this->is_multilanguage_allowed() ) {
 		        $new_post = apply_filters( 'elevio_append_language_id_to_article', $new_post, $post->ID );
+                // Getting other content languages
+                foreach ($langs as $lang) {
+                    $post_id = wpml_object_id_filter($new_post->id, $new_post->type, false, $lang);
+                    if (!$post_id) {
+                        continue;
+                    }
+                    $post = new Elevio_Sync_Post(get_post($post_id));
+                    $post->language_id = $lang;
+                    $output[] = $post;
+                }
 	        }
 
 	        $output[] = $new_post;
@@ -100,6 +113,19 @@ class ElevioSync
 	    }
 
         return array_values($output);
+    }
+
+    protected function getAvailableLanguages() {
+        if (!$this->is_multilanguage_allowed()) {
+            return [];
+        }
+
+        if ($this->languages) {
+            return $this->languages;
+        }
+
+        global $sitepress;
+        return $this->languages = array_keys($sitepress->get_active_languages());
     }
 
     protected function set_posts_query($query = false)
