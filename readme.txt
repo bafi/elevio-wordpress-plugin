@@ -38,6 +38,9 @@ We provide a free 14 day trial, create an account at https://elev.io/register
 
 == Changelog ==
 
+= 4.3.0 =
+* Improved support for multi-lingual content when WPML is used.
+
 = 4.2.0 =
 * Added support for multi-lingual content when WPML is used.
 * Thank you goes to Moustafa Gouda for this update 🙌
