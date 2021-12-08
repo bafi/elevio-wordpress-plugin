@@ -5,7 +5,7 @@ Plugin URI: https://elev.io/
 Description: A better way for your users to access the help they need.
 Author: Elevio
 Author URI: https://elev.io
-Version: 4.2.0
+Version: 4.3.0
 */
 
 function elevio_posts_tax_query($tax_query)
