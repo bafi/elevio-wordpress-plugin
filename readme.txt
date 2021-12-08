@@ -3,7 +3,7 @@ Contributors: Elevio
 Tags: Dixa, knowledge base, support, knowledge, Zendesk, Intercom, Freshdesk
 Stable tag: 4.9.8
 Requires at least: 2.8
-Tested up to: 5.6.6
+Tested up to: 5.6.2
 
 Elevio for WordPress plugin that integrates with your existing knowledge base, chat client, support system and more
 
