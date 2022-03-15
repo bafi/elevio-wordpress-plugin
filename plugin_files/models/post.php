@@ -110,9 +110,19 @@ class Elevio_Sync_Post
             $language = elevio_get_language_code($this->id);
             $sitepress->switch_lang($language);
         }
+        $is_multilanguage_allowed = Elevio::get_instance()->multi_language_is_enabled();
+        $tax_type = Elevio::get_instance()->get_category_taxonomy();
+        $default_language = $sitepress->get_default_language();
+        global $sitepress;
 
         if ($wp_categories = wp_get_object_terms($this->id, $args['taxonomy'])) {
             foreach ($wp_categories as $wp_category) {
+
+                // Unify category id if the translation is enabled
+                if ($is_multilanguage_allowed) {
+                    $wp_category->term_id = wpml_object_id_filter($wp_category->term_id, $tax_type, true, $default_language);
+                }
+
                 $category = new Elevio_Sync_Category($wp_category);
                 if ($category->id == 1 && $category->slug == 'uncategorized' && $args['taxonomy'] == 'category') {
                     // Skip the 'uncategorized' category
